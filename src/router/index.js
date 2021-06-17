@@ -1,27 +1,33 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import ContactsList from '../views/ContactsList'
+import ContactDetails from '../views/ContactDetails'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'ContactsList',
+    component: ContactsList,
+    meta: {title: 'Контакты'}
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    path: '/contact/:id',
+    name: 'ContactDetails',
+    component: ContactDetails,
+    meta: {title: 'Детальная страница контакта'}
   }
 ]
 
 const router = new VueRouter({
   routes
+})
+
+//change title on change route
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+  next()
 })
 
 export default router
